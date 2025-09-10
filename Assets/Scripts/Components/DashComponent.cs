@@ -2,12 +2,18 @@ using UnityEngine;
 
 public class DashComponent : MonoBehaviour
 {
-    public float dashCounter = 0f;
-    public float dashCoolCounter = 0f;
-    public float dashSpeed = 15;
-    public float dashLast = 0.5f, dashCooldown = 1f;
+    private float dashCounter = 0f;
+    private float dashCoolCounter = 0f;
+    private float dashLast, dashCooldown;
 
     private bool isCooldown = false;
+
+    public void SetProperties(PlayerStatus ps)
+    {
+        dashCooldown = ps.dashCooldown;
+        dashLast = ps.dashLast;
+    }
+
     public bool IsCanDash()
     {
         if (dashCoolCounter <= 0f && dashCounter <= 0f)

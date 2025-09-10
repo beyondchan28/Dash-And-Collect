@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HealthComponent : MonoBehaviour
 {
-    public float healthPoint = 100;
+    private float healthPoint = 100;
     void Start()
     {
         Debug.Log("Starting Health Point = " + healthPoint);

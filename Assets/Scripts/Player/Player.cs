@@ -3,17 +3,20 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public PlayerStatus playerStatus;
     public HealthComponent healthComponent;
     public InputComponent inputComponent;
     public MovementComponent movementComponent;
     public DashComponent dashComponent;
 
-    public float moveSpeed = 10;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        movementComponent.SetActiveMoveSpeed(moveSpeed);
+        playerStatus.Reset();
+        
+        healthComponent.SetHealthPoint(playerStatus.healthPoint);
+        dashComponent.SetProperties(playerStatus);
+        movementComponent.SetActiveMoveSpeed(playerStatus.moveSpeed);
     }
 
     // Update is called once per frame
@@ -28,13 +31,13 @@ public class Player : MonoBehaviour
         {
             if (dashComponent.IsCanDash())
             {
-                movementComponent.SetActiveMoveSpeed(dashComponent.dashSpeed);
+                movementComponent.SetActiveMoveSpeed(playerStatus.dashSpeed);
             }
         }
 
         if (dashComponent.IsDone())
         {
-            movementComponent.SetActiveMoveSpeed(moveSpeed);
+            movementComponent.SetActiveMoveSpeed(playerStatus.moveSpeed);
         }
     }
 }
