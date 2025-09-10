@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerStatus.Reset();
-        
+
         healthComponent.SetHealthPoint(playerStatus.healthPoint);
         dashComponent.SetProperties(playerStatus);
         movementComponent.SetActiveMoveSpeed(playerStatus.moveSpeed);

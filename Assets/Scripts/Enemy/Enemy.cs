@@ -42,9 +42,24 @@ public class Enemy : MonoBehaviour
     {
         ProcessState();
         if (currentState != STATE.STOP)
-        {    
+        {
             distance = Vector3.Distance(transform.position, target);
             transform.position = Vector2.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+        }
+    }
+
+    // when player hit enemy
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            // gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            Player player = collision.gameObject.GetComponent<Player>();
+            player.healthComponent.Hurt();
+            if (currentState != STATE.STOP)
+            {
+                ChangeState(STATE.STOP);
+            }
         }
     }
 
@@ -83,27 +98,23 @@ public class Enemy : MonoBehaviour
         }
 
         if (distance <= minimumStopDistance)
+        {
+            if (currentState == STATE.PATROL)
             {
-                if (currentState == STATE.MOVE)
+                if (target == patrolB)
                 {
-                    ChangeState(STATE.STOP);
+                    target = patrolA;
+                    patrolCount += 1;
+                    if (patrolCount == patrolAmount)
+                    {
+                        ChangeState(STATE.MOVE);
+                    }
                 }
-                else if (currentState == STATE.PATROL)
+                else
                 {
-                    if (target == patrolB)
-                    {
-                        target = patrolA;
-                        patrolCount += 1;
-                        if (patrolCount == patrolAmount)
-                        {
-                            ChangeState(STATE.MOVE);
-                        }
-                    }
-                    else
-                    {
-                        target = patrolB;
-                    }
+                    target = patrolB;
                 }
             }
+        }
     }
 }

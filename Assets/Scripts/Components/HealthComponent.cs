@@ -2,28 +2,28 @@ using UnityEngine;
 
 public class HealthComponent : MonoBehaviour
 {
-    private float healthPoint = 100;
+    private int healthPoint = 3;
     void Start()
     {
         Debug.Log("Starting Health Point = " + healthPoint);
     }
 
-    public void SetHealthPoint(float val)
+    public void SetHealthPoint(int val)
     {
         healthPoint = val;
     }
 
-    public float GetHealthPoint()
+    public int GetHealthPoint()
     {
         return healthPoint;
     }
 
-    public void Hurt(float damage)
+    public void Hurt()
     {
-        healthPoint -= damage;
+        healthPoint -= 1;
         if (healthPoint <= 0f)
         {
-            Debug.Log(transform.GetComponentInParent<Transform>().name + " Is DEAD");
+            Debug.Log(transform.parent.name + " Is DEAD");
         }
         Debug.Log("Health Point After Damaged = " + healthPoint);
 
